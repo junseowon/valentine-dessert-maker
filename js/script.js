@@ -230,15 +230,15 @@ function resetGame() { location.reload(); }
 
 function shareScore() { 
 
-    Kakao.Share.sendCustom({
-        templateId: 129457,
-        templateArgs: {    
-            'score': currentScore 
-        }
-    });
-
-    console.log("공유 버튼 클릭 성공");
-
+    try {
+        alert("공유를 시도합니다! 점수: " + currentScore); // 모바일에서 작동 확인용
+        Kakao.Share.sendCustom({
+            templateId: 129457,
+            templateArgs: { 'score': currentScore }
+        });
+    } catch (e) {
+        alert("에러 발생: " + e.message); // 에러가 나면 팝업으로 알려줌
+    }
  }
 
 
