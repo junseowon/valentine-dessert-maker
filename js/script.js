@@ -211,6 +211,13 @@ function checkGameOver() {
     }
 }
 
+function toggleGuide() {
+            const guide = document.getElementById('evolution-guide');
+            const overlay = document.getElementById('overlay');
+            guide.classList.toggle('show');
+            overlay.classList.toggle('show');
+}
+
 function endGame() {
     isGameOver = true;
     document.getElementById('game-over').style.display = 'flex';

@@ -12,6 +12,8 @@
 </head>
 <body>
 
+    <div id="overlay" onclick="toggleGuide()"></div>
+
     <div id="game-wrapper">
         <div class="header">
             <h1>💝 발렌타인 달콤 메이커</h1>
@@ -19,6 +21,7 @@
 
         <div class="top-ui">
             <div class="score-box">점수: <span id="score">0</span></div>
+            <button id="guide-toggle-btn" onclick="toggleGuide()">🍭 족보</button>
             <div class="next-box">
                 <div class="next-label">NEXT</div>
                 <div id="next-emoji">🍬</div>
