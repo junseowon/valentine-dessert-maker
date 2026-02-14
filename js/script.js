@@ -219,6 +219,21 @@ function endGame() {
 
 function resetGame() { location.reload(); }
 
+function shareScore() { 
+    if (!Kakao.isInitialized()) {
+        Kakao.init("a98f54f492ffb664e66af9546d2652e7");
+    }
+
+    Kakao.Link.sendCustom({
+        templateId: 129457,
+        templateArgs: {    
+            'score': currentScore 
+        }
+    });
+
+ }
+
+
 function getX(e) {
     const rect = container.getBoundingClientRect();
     return e.clientX - rect.left;
