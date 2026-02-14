@@ -19,7 +19,7 @@ let isGameOver = false;
 let nextFruitIndex = 0;
 let currentHoldingIndex = 0;
 let isWaiting = false;
-let holdingBody = null; 
+let holdingBody = null;
 const DEAD_LINE = 85;
 
 Kakao.init("a98f54f492ffb664e66af9546d2652e7");
@@ -31,7 +31,7 @@ const setup = () => {
 
     engine = Matter.Engine.create();
     engine.world.gravity.y = 1.5; // 조금 더 묵직하게 중력 조정
-    
+
     // 물리 계산
     engine.positionIterations = 20;
     engine.velocityIterations = 20;
@@ -53,7 +53,7 @@ const setup = () => {
     const ground = Matter.Bodies.rectangle(width / 2, height + 100, width * 2, 200, wallOptions);
     const leftWall = Matter.Bodies.rectangle(-50, height / 2, 100, height * 2, wallOptions);
     const rightWall = Matter.Bodies.rectangle(width + 50, height / 2, 100, height * 2, wallOptions);
-    
+
     Matter.Composite.add(engine.world, [ground, leftWall, rightWall]);
 
     runner = Matter.Runner.create();
@@ -69,7 +69,7 @@ const setup = () => {
         const x = getX(e);
         const fruitData = DESSERT[currentHoldingIndex];
         const clampedX = Math.max(fruitData.size + 10, Math.min(width - fruitData.size - 10, x));
-        
+
         Matter.Body.setPosition(holdingBody, { x: clampedX, y: 45 });
         document.getElementById('guide-line').style.left = clampedX + 'px';
         document.getElementById('guide-line').style.display = 'block';
@@ -86,11 +86,11 @@ const setup = () => {
     container.addEventListener('touchstart', (e) => {
         e.preventDefault();
         updateUI(e.touches[0]);
-    }, {passive: false});
+    }, { passive: false });
     container.addEventListener('touchmove', (e) => {
         e.preventDefault();
         updateUI(e.touches[0]);
-    }, {passive: false});
+    }, { passive: false });
     container.addEventListener('touchend', (e) => {
         e.preventDefault();
         if (isGameOver || isWaiting || !holdingBody) return;
@@ -214,32 +214,55 @@ function checkGameOver() {
 }
 
 function toggleGuide() {
-            const guide = document.getElementById('evolution-guide');
-            const overlay = document.getElementById('overlay');
-            guide.classList.toggle('show');
-            overlay.classList.toggle('show');
+    const guide = document.getElementById('evolution-guide');
+    const overlay = document.getElementById('overlay');
+    guide.classList.toggle('show');
+    overlay.classList.toggle('show');
 }
 
 function endGame() {
     isGameOver = true;
     document.getElementById('game-over').style.display = 'flex';
     document.getElementById('final-score').innerText = currentScore;
+
+    const shareBtn = document.getElementById('btn-share');
+    const resetBtn = document.getElementById('btn-reset');
+
+    if (shareBtn) {
+        shareBtn.addEventListener('pointerdown', (event) => {
+            event.target.classList.add('click');
+        });
+
+        shareBtn.addEventListener('pointerup', (event) => {
+            event.target.classList.remove('click');
+            shareScore(); 
+        });
+    }
+
+    if (resetBtn) {
+        resetBtn.addEventListener('pointerdown', (event) => {
+            event.target.classList.add('click');
+        });
+
+        resetBtn.addEventListener('pointerup', (event) => {
+            event.target.classList.remove('click');
+            resetGame();
+        });
+    }
 }
 
 function resetGame() { location.reload(); }
 
-function shareScore() { 
+function shareScore() {
 
-    try {
-        alert("공유를 시도합니다! 점수: " + currentScore); // 모바일에서 작동 확인용
-        Kakao.Share.sendCustom({
-            templateId: 129457,
-            templateArgs: { 'score': currentScore }
-        });
-    } catch (e) {
-        alert("에러 발생: " + e.message); // 에러가 나면 팝업으로 알려줌
-    }
- }
+    Kakao.Share.sendCustom({
+        templateId: 129457,
+        templateArgs: {
+            'score': currentScore
+        }
+    });
+
+}
 
 
 function getX(e) {

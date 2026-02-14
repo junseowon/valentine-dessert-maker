@@ -131,7 +131,7 @@ body {
     position: relative;
     width: 100%;
     max-width: 360px;
-    margin-left: 170px; 
+    margin-left: 170px;
     height: auto;
     max-height: 75vh;
     aspect-ratio: 2/3;
@@ -223,7 +223,7 @@ body {
 /* 모바일 대응 (버튼이 활성화되는 시점) */
 @media (max-width: 800px) {
 
-    #game-container{
+    #game-container {
         margin-left: 0px;
     }
 
@@ -291,9 +291,11 @@ body {
     color: white;
     text-align: center;
     padding: 20px;
+    z-index: 9999;
 }
 
 .btn {
+    position: relative;
     background: #ff4d6d;
     color: white;
     border: none;
@@ -304,6 +306,7 @@ body {
     font-weight: bold;
     margin-top: 15px;
     box-shadow: 0 4px 0 #c9184a;
+    z-index: 10000;
 }
 
 #guide-line {
