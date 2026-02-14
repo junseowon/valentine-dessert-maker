@@ -22,6 +22,8 @@ let isWaiting = false;
 let holdingBody = null; 
 const DEAD_LINE = 85;
 
+Kakao.init("a98f54f492ffb664e66af9546d2652e7");
+
 const setup = () => {
     container = document.getElementById('game-container');
     const width = container.clientWidth;
@@ -227,16 +229,15 @@ function endGame() {
 function resetGame() { location.reload(); }
 
 function shareScore() { 
-    if (!Kakao.isInitialized()) {
-        Kakao.init("a98f54f492ffb664e66af9546d2652e7");
-    }
 
-    Kakao.Link.sendCustom({
+    Kakao.Share.sendCustom({
         templateId: 129457,
         templateArgs: {    
             'score': currentScore 
         }
     });
+
+    console.log("공유 버튼 클릭 성공");
 
  }
 
